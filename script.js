@@ -8,11 +8,11 @@ var pickedColor;
 let defaultColor = "#582c99";
 
 // Grab all appropriate elements from the HTML.
-var circles = document.querySelectorAll(".circle"); // Replace with your own selector
-var colorToGuess = document.getElementById("colorToGuess"); // Replace with your own selector
-var resultMessage = document.getElementById("resultMessage"); // Replace with your own selector
-var banner = document.getElementById("banner"); // Replace with your own selector
-var resetButton = document.getElementById("resetButton"); // Replace with your own selector
+var circles = document.querySelectorAll(".circle"); // No change here
+var colorToGuess = document.getElementById("colour-to-guess"); // Adjusted to match the HTML ID
+var resultMessage = document.getElementById("result-message"); // Adjusted to match the HTML ID
+var banner = document.querySelector("h1"); // Using h1 as the banner selector as per your HTML structure
+var resetButton = document.getElementById("restart"); // Adjusted to match the HTML ID
 
 // The init function should reset the stage and set a new RGB color
 function init() {
@@ -33,7 +33,9 @@ function clickCircle() {
   // and set the color of each circle and of the banner to be the color we were guessing.
   // If the color you clicked on was incorrect, you should set the color of the circle you just clicked to be the default color
   // and change the result text to be "Try again"
-  if (this.style.backgroundColor === pickedColor) {
+  var clickedColor = this.style.backgroundColor.replace(/\s+/g, '');
+  var correctColor = pickedColor.replace(/\s+/g, '');
+  if (clickedColor === correctColor) {
     resultMessage.textContent = "You win!";
     resetButton.textContent = "Play again";
     changeColors(pickedColor);
@@ -94,12 +96,16 @@ function chooseColor() {
   return colors[random];
 }
 
-// Function to change the colors of all circles and the banner
+// Write a function that will change the color of each circle
+// as well as the h1 background to be the color that is passed in.
 function changeColors(color) {
+  // change each circle to match given color
   for (var i = 0; i < circles.length; i++) {
     circles[i].style.backgroundColor = color;
   }
+  // change the banner color as well
+  banner.style.backgroundColor = color;
 }
 
-// Call the init function to set up the game
+// Initialize the game
 init();
